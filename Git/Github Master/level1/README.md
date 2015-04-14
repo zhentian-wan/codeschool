@@ -67,8 +67,28 @@ Difference between Forking and Cloning:
 # Level 1 Section 3 Submitting a Pull Request
 ## Pull Requests 
 
-It would be better if you can also send you changes to the original repo also. So you need to use **Pull Request**.
+It would be better if you can also send you changes to the v repo also. So you need to use **Pull Request**.
 The own will check your pull request to decide whether it is ok and maybe leave some comments.
 If the pull request is approved, then your changes will be merged to the original master branch.
 
 # Level 1 Section 4 Updating your Fork
+
+Sometime there are may not just one person forking the repo and working it. If they update the project and have been merged into the master,
+then you need to get those changes from original repo to your local merge with your local master then push back to your remote repo.
+
+So, to do that:
+1. Add original remote repo (Ex: called upstream):
+
+     git remote add upstream <path_to_repo>
+	 
+2. Fetch changes to your local:
+
+	git fetch upstream
+	
+3. Merge them into master:
+
+	git merge upstream/master master
+	
+4. Push them to your remote
+
+	git push origin master
