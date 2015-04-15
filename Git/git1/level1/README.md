@@ -1,6 +1,7 @@
 # Level One
 	
 In this level, you will learn follow things:
+
 1. How to point which project folder you want GIT to work on! -- git init
 2. How to check what change has been made since last commint  -- git status
 3. How to add files to stage                                  -- git add <filename>
