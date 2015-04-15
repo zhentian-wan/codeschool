@@ -93,5 +93,58 @@ For example:
 Squash merges a commit with the previous commit.
 Save the exit, another editor will pop up, edit your message and save & exits again.
 
+----------------------------------
 
+# Exercise
 
+##REBASE RECAP
+
+So you've been working on your feature branch for a couple days and you realize you need to bring commits back in from master. Now you could just merge in the branch but that would create an ugly merge commit. Use rebase to bring those changes into your branch without the merge commit.
+
+     git rebase master
+	 
+##INTERACTIVE REBASE
+
+You're getting ready to merge in your feature branch, but first you want to clean up your commits a bit. Go ahead and use interactive rebase to edit your last 4 commits.
+
+##COMMIT ORDERING
+You notice a critical error on your part. The commit where you wrote tests comes after the commit where you made the actual changes. Let's swap these 2 commits so that it looks like you wrote the tests first. Swap the 'Add tests' commit so that it comes before the 'Implement poodles' commit.
+
+	pick b3f1649 Add unicorn
+	pick f239187 Implement poodles
+	pick 4b65a5a Add tests
+	pick c3f863f Added a title to the homepage
+
+to:
+
+ 	pick b3f1649 Add unicorn
+	pick 4b65a5a Add tests
+	pick f239187 Implement poodles
+	pick c3f863f Added a title to the homepage
+	
+##REWORDING A COMMIT I
+As you're editing your commits, you notice that the commit that says 'Add tests' is a little vague, maybe you should change it to something more specific. Use the reword command to change the message of this commit.
+
+	pick b3f1649 Add unicorn
+	pick 4b65a5a Add tests
+	pick f239187 Implement poodles
+	pick c3f863f Added a title to the homepage
+	
+to:
+
+	pick b3f1649 Add unicorn
+	reword 4b65a5a Add tests
+	pick f239187 Implement poodles
+	pick c3f863f Added a title to the homepage	
+
+##REWORDING A COMMIT II
+After setting the 'reword' command in the interactive rebase editor another editor window has opened up. This is where you actually change the commit message. Go ahead and change the commit message to: Add tests for poodles to be more descriptive.
+
+	Add tests
+	
+to:
+
+	Add tests for poodles
+	
+##SPLIT COMMITS I
+You remember that the 'Add unicorn' commit also contains the testing changes. Since we have separate commits for adding tests for poodles it makes sense to split out the test changes into a separate commit. Tell git to stop at this commit so we can reorganize it a bit.
