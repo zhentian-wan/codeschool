@@ -8,9 +8,8 @@ They have one common commit and two differences.
 
 We use:
 
-  git checkout unicorns
-  
-  git rebase master
+     git checkout unicorns
+     git rebase master
   
 What those command lines do is first switch to branch 'unicorns'.
 System will create a **temp** area:
