@@ -148,3 +148,46 @@ to:
 	
 ##SPLIT COMMITS I
 You remember that the 'Add unicorn' commit also contains the testing changes. Since we have separate commits for adding tests for poodles it makes sense to split out the test changes into a separate commit. Tell git to stop at this commit so we can reorganize it a bit.
+
+	pick b3f1649 Add unicorn
+	pick 4b65a5a Added tests for poodles
+	pick f239187 Implement poodles
+	pick c3f863f Added a title to the homepage
+
+to:
+
+	edit b3f1649 Add unicorn
+	pick 4b65a5a Added tests for poodles
+	pick f239187 Implement poodles
+	pick c3f863f Added a title to the homepage
+	
+##SPLIT COMMITS II 
+After saving the interactive rebase text file, git has stopped at the 'Add unicorn' commit. The first thing we need to do is to reset back to the previous commit, so the changes in the most recent commit are back in the file and unstaged.
+
+     git reset HEAD^
+	 
+##SPLIT COMMITS III
+Great! You've already re-committed the changes needed in 2 different commits. All that's left to do is to resume the rebase with the continue option.
+
+	  git rebase --continue
+	  
+##SQUASHING COMMITS I
+You noticed another bug with those pesky poodles, so you've gone ahead and fixed it, making another commit in the process. Now you have 2 commits that both affect the poodles page. You should squash them into one commit to simplify your git logs.
+
+	pick b3f1649 Add unicorn
+	pick 4b65a5a Add tests
+	pick f239187 Implement poodles
+	pick c3f863f Add title to poodle page
+	
+to:
+
+	pick b3f1649 Add unicorn
+	pick 4b65a5a Add tests
+	pick f239187 Implement poodles
+	squash c3f863f Add title to poodle page
+	
+##SQUASHING COMMITS II
+After designating a commit to be squashed, another editor pops up enabling you to set a commit message for the resulting commit. Go ahead and set to: squashed some poodles.
+	
+	squashed some poodles
+
