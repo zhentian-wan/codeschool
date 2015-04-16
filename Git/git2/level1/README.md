@@ -93,6 +93,10 @@ For example:
 Squash merges a commit with the previous commit.
 Save the exit, another editor will pop up, edit your message and save & exits again.
 
+After that force to push to the master:
+
+	git push -f
+
 ----------------------------------
 
 # Exercise
@@ -188,6 +192,11 @@ to:
 	
 ##SQUASHING COMMITS II
 After designating a commit to be squashed, another editor pops up enabling you to set a commit message for the resulting commit. Go ahead and set to: squashed some poodles.
-[Note] **You should delete the old commit message**
+
+[Note]**You should delete the old commit message**
+
 	squashed some poodles
 
+After save, force to push to master
+
+	git push -f
