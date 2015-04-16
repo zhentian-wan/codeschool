@@ -188,6 +188,6 @@ to:
 	
 ##SQUASHING COMMITS II
 After designating a commit to be squashed, another editor pops up enabling you to set a commit message for the resulting commit. Go ahead and set to: squashed some poodles.
-	
+[Note] **You should delete the old commit message**
 	squashed some poodles
 
