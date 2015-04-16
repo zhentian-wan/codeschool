@@ -159,5 +159,18 @@ Recursive merges.
 	  git merge --no-ff feature_branch
 	  git push
 	  
+##In Ex:
+Pull all the changes down from GitHub. Look at your git log and you’ll see the "new_rules" branch has been merged into master. After pulling it down, your "master" branch should be at the same state as the "master" branch on GitHub.
+Merge the "deadly_skills" branch into master and push the changes to GitHub. You'll need to be on the "master" branch when you run the merge command.
+After you push the "master" branch, you'll see that the pull request on the branch was closed.
 
+		dojo_rules (deadly_skills)$ git checkout master
+		dojo_rules (master)$ git pull
+		
+Next, merge in the using the no-ff option.
 
+	   dojo_rules (master)$ git merge --no-ff deadly_skills -m "Merging in deadly_skills"		
+
+Force push it to GitHub:
+
+	  dojo_rules (deadly_skills)$ git push
