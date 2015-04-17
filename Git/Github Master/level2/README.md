@@ -147,7 +147,7 @@ This is recommended.
 * Clear what was done on a branch
 * Single commit to revert
 
-	  git checkout master
+	  git checkout master 
 	  git merge --no-ff feature_branch
 	  
 
