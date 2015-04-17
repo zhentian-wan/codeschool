@@ -104,19 +104,19 @@ Now what you need to do is:
 
 1. Switch to the master:
 
-	  git checkout master
+     git checkout master
 	  
 2. Get all the lastest updates:
 
-	  git pull
+     git pull
 	  
 3. Check the branchs available (optional):
 
-	  git branch -a
+     git branch -a
 	  
 4. Find the branch you need to work on, in this case, 'new_rules' branch:
 
-	  git checkout new_rules
+     git checkout new_rules
 	  
 5. You can find the file which you want to modify, after done, commit it and push it.
 
@@ -141,7 +141,9 @@ No idea what commits were made from which feature branch.
 
 ###Recursive Merge
 This is recommended. 
+
 **Benefints:**
+
 * Clear what was done on a branch
 * Single commit to revert
 
