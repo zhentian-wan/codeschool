@@ -40,7 +40,8 @@ Which push the changes to the new branch and with the same name, but also use th
 After that, go the Github to send a **pull request** on the Github from the branch for the co-works to review the changes.
 
 In Ex:
-Create a pull request from your branch to your master. When you create a pull request by default it'll go from your master branch back to "deadlyvipers/dojo_rules". In this case though, we want the pull request to go from "dojo_rules/deadly_skills" to "dojo_rules/master" – both in your repository.
+
+Create a pull request from your branch to your master. When you create a pull request by default it'll go from your master branch back to "deadlyvipers/dojo_rules". In this case though, we want the pull request to go from "dojo_rules/deadly_skills" to "dojo_rules/master" â€“ both in your repository.
 To do this, create a pull request on GitHub. Make sure the base is your master and the "compare" is your "deadly_skills" branch. This should show all of the changes you made on your branch.	
 Navigate over to the "Pull Requests" page on your fork of the repo. Create a pull request that will go from your **branch of dojo_rules** to **your master**.
 
@@ -61,14 +62,15 @@ to check your code and give you some comments. When you fix the comments and you
 
 1. Download all branches from GitHub
 
-	  git fetch
+     git fetch
+     
 2. View all of the branches
 
-     git branch -a  //-a includesx remote branch
+      git branch -a  //-a includesx remote branch
 	 
 3. Checkout a local copy of a remote branch
 
-     git checkout <branch_name>
+      git checkout <branch_name>
 	 
 4. Test code, make any changes and then commit and push changes
 
@@ -77,6 +79,7 @@ to check your code and give you some comments. When you fix the comments and you
 	  git push
 	  
 In Ex:
+
 	  git checkout -b deadly_skills
 	  git push origin deadly_skills
 	  <make_changes>
@@ -84,10 +87,15 @@ In Ex:
 	  git push origin deadly_skills	  
 	  
 Create a pull request from your "deadly_skills" branch back to your "master" branch, head to your repo and click on "Pull Requests". Then click "New Pull Request" at the top right. On the left side you'll see a "base fork". Change this so that it says "base: master".
-Now the pull request should be comparing "master" and "master". However, we want to change this a little more. The right select box should say "compare: master". Click on this, then select your branch – "deadly_skills". You should see a diff with your new deadly skills added.
+
+Now the pull request should be comparing "master" and "master". However, we want to change this a little more. The right select box should say "compare: master". Click on this, then select your branch â€“ "deadly_skills". You should see a diff with your new deadly skills added.
+
 With this all setup, click "Create pull request", give it any description you would like, then click "Create pull request". After that, you should be abler to click "Submit Answer" and move on! Whew!
+
 Go to your fork of "dojo_rules" and click "Settings" on the right. Click "Collaborators", which will likely prompt you to verify your GitHub password. After entering it, enter "codeschool-kiddo" into the form and select "codeschool-kiddo" from the autocomplete list then click "Add Collaborator".
+
 After these steps are setup, you should be in a good position to complete the tasks from this challenge. If you are running into trouble, consider deleting your "dojo_rules" repository on GitHub (and locally) and re-forking it then completing the above steps.
+
 
 ###Merge pull request
 When other creaet a new branch 'new_rules'. They did some changes and push to the master. 
@@ -160,7 +168,8 @@ Recursive merges.
 	  git push
 	  
 ##In Ex:
-Pull all the changes down from GitHub. Look at your git log and you’ll see the "new_rules" branch has been merged into master. After pulling it down, your "master" branch should be at the same state as the "master" branch on GitHub.
+
+Pull all the changes down from GitHub. Look at your git log and youâ€™ll see the "new_rules" branch has been merged into master. After pulling it down, your "master" branch should be at the same state as the "master" branch on GitHub.
 Merge the "deadly_skills" branch into master and push the changes to GitHub. You'll need to be on the "master" branch when you run the merge command.
 After you push the "master" branch, you'll see that the pull request on the branch was closed.
 
