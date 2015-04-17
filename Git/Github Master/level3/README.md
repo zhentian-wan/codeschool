@@ -41,8 +41,16 @@ without affecting master?
 There are three key reasons for creating release branches:
 
 1. Manual QA
+
+![](http://cs.uef.fi/paikka/zhentiw/images/git/branchs/1.png)
+
 2. Long running releases
+
+![](http://cs.uef.fi/paikka/zhentiw/images/git/branchs/2.png)
+
 3. **On demand hot fixes**
+
+![](http://cs.uef.fi/paikka/zhentiw/images/git/branchs/3.png)
 
 	git checkout v1.1
 	git checkout -b rb1.1  //create a release branch 1.1
