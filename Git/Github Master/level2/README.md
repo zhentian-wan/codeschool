@@ -46,6 +46,7 @@ To do this, create a pull request on GitHub. Make sure the base is your master a
 Navigate over to the "Pull Requests" page on your fork of the repo. Create a pull request that will go from your **branch of dojo_rules** to **your master**.
 
 To do that: 
+
 1. Go the the Github, switch to the branch.
 2. Create a pull request.
 3. Compare your own repo: base --> master, head --> <branch_name>
@@ -56,7 +57,7 @@ To do that:
 When you working on a feature branch, and you did one commit, then you can make a pull request to other team member,
 to check your code and give you some comments. When you fix the comments and you **commit** it and **push** to the github.
 
-![](http://cs.uef.fi/paikka/zhentiw/images/pullrequest/1.png)
+![](http://cs.uef.fi/paikka/zhentiw/images/git/pullrequest/1.png)
 
 ### Reviewing a pull request
 
