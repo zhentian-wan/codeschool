@@ -47,7 +47,7 @@ If when you want to delete a local branch, it shows the error that the branch is
 Sometime it may happen that, you want to push changes to a remote branch which has been deleted by co-worker:
 It shows everything is up to date.
 
-![](./image/3.png)
+![](./images/3.png)
 
 You can run:
 	
