@@ -85,3 +85,52 @@ describe("for block", function(){
 * [Let 1](http://www.cnblogs.com/Answer1215/p/4109464.html)
 * [Let 2: Fiald case](http://www.cnblogs.com/Answer1215/p/4109489.html)
 * [Let 3: Block Scope](http://www.cnblogs.com/Answer1215/p/4109521.html)
+
+
+## CONST
+
+'const' keyword is for creating a **read only** variable, something you can never change once created.
+'const' likes 'let' keyword alos has block scope.
+
+describe("using const", function(){
+
+	it("will make a variable read-only", function(){
+	
+		const MAX_SIZE = 10;
+		
+		//MAX_SIZE = 12; //SyntaxError
+		
+		expect(MAX_SIZE).toBe(10);  //true
+	});
+	
+	it("can shadow outer declaration", function(){
+		
+		const x = 12;
+		var doWork = function(){
+			
+			let x = 10;
+			return x;
+		};
+		
+		var result = doWork();
+		expect(result).toBe(10);  //true
+		expect(x).toBe(12); //true
+	});
+	
+	it("const also has block scope", function(){
+		
+		if(true){
+			const x = 12;  //SyntaxError, x is not defined
+		}
+		
+		var doWork = function(){
+			
+			let x = 10;
+			return x;
+		};
+		
+		var result = doWork();
+		expect(result).toBe(10);  //true
+		expect(x).toBe(12); //true
+	});	
+});
