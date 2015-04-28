@@ -82,6 +82,6 @@ describe("for block", function(){
 
 #### More about let
 
-[Let 1](http://www.cnblogs.com/Answer1215/p/4109464.html)
-[Let 2](http://www.cnblogs.com/Answer1215/p/4109489.html)
-[Let 3](http://www.cnblogs.com/Answer1215/p/4109521.html)
+* [Let 1](http://www.cnblogs.com/Answer1215/p/4109464.html)
+* [Let 2: Fiald case](http://www.cnblogs.com/Answer1215/p/4109489.html)
+* [Let 3: Block Scope](http://www.cnblogs.com/Answer1215/p/4109521.html)
