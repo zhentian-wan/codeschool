@@ -60,5 +60,6 @@ Install:
 For Windows, need to install [nodist](https://github.com/marcelklehr/nodist) for node manager.
 
 Usage:
+
 	node --harmony --use-strict app.js 
 	
