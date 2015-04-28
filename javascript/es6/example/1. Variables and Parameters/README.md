@@ -1,7 +1,10 @@
 #'var' and 'let'
 
 The main difference between 'var' and 'let' is on block scope.
-'var' doesn't have block scope.
+'var' doesn't have block scope. 
+
+There are tow scope in es5: global scope and function scope.
+So in es6, there are three scopes: global scope, function scope and block scope.
 
 For example: 
 
