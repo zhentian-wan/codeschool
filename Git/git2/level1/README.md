@@ -78,6 +78,11 @@ When you use 'git log --oneline' log out those message again, you will see the m
 
 ### Split commits (Keyword: **edit**)
 Sometime you may want to split one single commit into 2 or even 3 commits.
+After change the keyword from 'pick' to 'edit', save it. First thing to do is reset the head:
+
+	git reset HEAD^
+	
+After that add file and commit.
 
 
 ### Squash Commits
