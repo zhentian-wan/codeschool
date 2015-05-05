@@ -174,7 +174,6 @@ There is a better way to do this:
 		}
 	}
 ```
-
 **super(name)** will call the same function (constructor) in Person class.
 So the name prop can be set also.
 
@@ -187,7 +186,89 @@ You can also invoke any function in super class by using:
 
 ### Overrides
 
+The child class can override the parent class's methods.
+
+```
+describe("Override", function(){
+	class Person{
+
+		constructor(name){
+			this.name = name;
+		}
+		
+		get name(){
+			return this._name;
+		}
+		
+		set name(name){
+			this._name = name;
+		}
+		
+		doWork(){
+			return "free";
+		}
+		
+		//Override the Object class toString method
+		toString(){
+			return this.name;
+		}
+	}
+
+	class Employee{
+
+		constructor(title, name){
+			super(name);
+			this.title = title;
+		}
+		
+		get title(){
+			return this._title;
+		}
+		
+		set title(title){
+			this._title = title;
+		}
+		
+		//Override Person class doWork method
+		doWork(){
+			return "paid";
+		}
+		
+		//Override Person class toString method
+		toString(){
+			return this.name - this.title;
+		}
+	}	
 	
+	let e1 = new Employee("Developer", "Alex");
+	let p1 = new Person("John");
+	
+	expect(e1.doWork());.toBe("paid");
+	expect(p1.doWork()).toBe("free");
+	expect(p1.toString()).toBe("John");
+	expect(e1.toString()).toBe("Alex - Developer");
+	
+	// use Rest parameters
+	let makeEveryoneWork = function(...people){
+		var results = [];
+		for(var i = 0; i < people.length; i++){
+			/*
+			//Check there is a doWork method
+			if(people[i].doWork()){
+				results.push(people[i].doWork());
+			}*/
+
+			//Better way, because Employee extend Person, so if it is Person instance, then the test should pass. 
+			if(people[i].instanceof.Person){
+				results.push(people[i].doWork());
+			}
+		}
+		return results;
+	}
+	
+	expect(makeEveryoneWork(p1, e1, {})).toEqual(["free", "paid"]);
+});
+```
 
 	
 
