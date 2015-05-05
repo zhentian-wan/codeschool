@@ -5,6 +5,7 @@
 * [Tools](./example/00. Tools/README.md)
 * [Variables and Parameters](./example/1. Variables and Parameters/README.md)
 * [Class](./example/2. Class/README.md)
+* [Function Programming](./example/3. Functional Programming/README.md)
 
 ## Introduction
 
