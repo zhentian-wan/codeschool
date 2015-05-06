@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script data-require="traceur@*" data-semver="0.0.0-20140302" src="https://traceur-compiler.googlecode.com/git/bin/traceur.js"></script>
+  <script>
+    traceur.options.experimental = true;
+  </script>
+  <script data-require="traceur@*" data-semver="0.0.0-20140302" src="https://traceur-compiler.googlecode.com/git/src/bootstrap.js"></script>
+  <!-- <script data-require="traceur-runtime@*" data-semver="0.0.88" src="https://cdn.rawgit.com/google/traceur-compiler/d3d0553de3315398a956dc2f9edd6a982d786b0a/bin/traceur-runtime.js"></script> -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <script type="module">
+    class Company {
+      constructor() {
+        this.employees = [];
+        console.log("Company constructor...");
+      }
+
+      addEmployees(...names) {
+        //concat return a new array
+        this.employees = this.employees.concat(names);
+      }
+
+      * [Symbol.iterator]() {
+        for (var e of this.employees) {
+          yield e;
+        }
+      }
+    };
+
+
+    var filter = function * (items, prediction) {
+      for (var item of items) {
+        if (prediction(item)) {
+          yield item;
+        }
+      }
+    };
+
+    var pick = function * (items, num) {
+      // if just pick 0 person, just return;
+      if (num < 1) return;
+      var count = 0;
+      for (var item of items) {
+        yield item;
+        count++;
+        if (count >= num) {
+          return;
+        }
+      }
+    };
+
+
+    var count = 0;
+    console.log("start");
+    var company = new Company();
+    company.addEmployees('Tom', "Jim", "Kate", "Tim");
+    console.log(company);
+
+    for (var employee of pick(filter(company, (e) = > e[0] == "T"), 1)) {
+      count++;
+    }
+
+    document.write(count);
+  </script>
+</body>
+
+</html>

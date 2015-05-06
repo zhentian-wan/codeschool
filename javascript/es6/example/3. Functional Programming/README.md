@@ -326,7 +326,7 @@ describe("generators", function(){
 From last 'Company' example, we can use generator to improve the code.
 
 * First we don't need to write ourselves ArrayIterrator class.
-* Then we make `[Symbol.iterator]()` as a generator function by adding ** '*' **.
+* Then we make `[Symbol.iterator]()` as a generator function by adding '*'.
 * Loop though the **employees** array and **yield** the each employee.
 
 So the company class should looks like:
