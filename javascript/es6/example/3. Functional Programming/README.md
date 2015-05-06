@@ -219,6 +219,55 @@ class RangeIterator{
 }
 ```
 
+```
+describe("Build a iterator by myself", function(){
+
+	it("Symbol.iterator", function(){
+		
+		class Company{
+			constructor(){
+				this.employees = [];
+			}
+			
+			addEmployees(...names){
+				//concat return a new array
+				this.employees = this.employees.concat(names);
+			}
+			
+			[Symbol.iterator](){
+				return  new ArrayIterator(this.employees);
+			}
+		}
+		
+		class ArrayIterator{
+			constructor(array){
+				this.array = array;
+				this.index = 0;
+			}
+			
+			next(){
+				var result = {value: undefine, done: true};
+				if(this.index < this.array.length){
+					result.value = this.array[this.index];
+					result.done = false;
+					this.index++;
+				}
+				return result;
+			}
+		}
+		
+		let count = 0;
+		let company = new Company();
+		company.addEmployees('Tom', "Jim", "Kate", "Tim");
+		
+		for(let employee of company){
+			count++;
+		}
+		expect(count).toBe(4);
+	})
+});
+```
+
 ## Generators
 
 In last section, we see how to build a iteratable class.
@@ -273,6 +322,128 @@ describe("generators", function(){
 ```
 
 ## Putting it together
+
+From last 'Company' example, we can use generator to improve the code.
+
+* First we don't need to write ourselves ArrayIterrator class.
+* Then we make `[Symbol.iterator]()` as a generator function by adding ** '*' **.
+* Loop though the **employees** array and **yield** the each employee.
+
+So the company class should looks like:
+
+```
+      class Company{
+      	constructor(){
+      		this.employees = [];
+      		console.log("Company constructor...");
+      	}
+      			
+      	addEmployees(...names){
+      		//concat return a new array
+      		this.employees = this.employees.concat(names);
+      	}
+      			
+      	*[Symbol.iterator](){
+      		for(var e of this.employees){
+      			yield e;
+      		}
+      	}
+      } ; 
+```
+
+We can also add **filter** logic, filter also should be a genrator function:
+
+```
+      var filter = function*(items, prediction) {
+      	for(var item of items){
+      		if(prediction(item)){
+      			yield item;
+      		}
+      	}
+      };
+```
+
+Let's also create a **pick** function, it yield out the number of person you want:
+
+```
+      var pick = function*(items, num){
+      	// if just pick 0 person, just return;
+      	if(num < 1) return;
+      	var count = 0;
+      	for(var item of items){
+      		yield item;
+      		count++;
+      		if(count >= num){
+      			return;
+      		}
+      	}
+      };
+```
+
+If in generator function use **return**, it will set **done: true**.
+
+So put it together: 
+```
+describe("Build a iterator by myself", function(){
+
+	it("Symbol.iterator", function(){
+		
+      class Company{
+      	constructor(){
+      		this.employees = [];
+      		console.log("Company constructor...");
+      	}
+      			
+      	addEmployees(...names){
+      		//concat return a new array
+      		this.employees = this.employees.concat(names);
+      	}
+      			
+      	*[Symbol.iterator](){
+      		for(var e of this.employees){
+      			yield e;
+      		}
+      	}
+      } ; 
+      
+      
+      var filter = function*(items, prediction) {
+      	for(var item of items){
+      		if(prediction(item)){
+      			yield item;
+      		}
+      	}
+      };
+      
+      var pick = function*(items, num){
+      	// if just pick 0 person, just return;
+      	if(num < 1) return;
+      	var count = 0;
+      	for(var item of items){
+      		yield item;
+      		count++;
+      		if(count >= num){
+      			return;
+      		}
+      	}
+      };   
+      
+      
+		var count = 0;
+		console.log("start");
+		var company = new Company();
+		company.addEmployees('Tom', "Jim", "Kate", "Tim");
+		console.log(company);
+		
+		for(var employee of pick(filter(company, (e) => e[0] == "T"),1)){
+			count++;
+		}
+		expect(count).toBe(1);
+	})
+});
+```
+[Notice:] If you use treacur and in the generator, you use 'let' instead of 'var' may cause problem, see the [issue on github](https://github.com/google/traceur-compiler/issues/33)
+
 
 ## Calling next
 
