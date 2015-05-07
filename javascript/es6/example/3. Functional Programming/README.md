@@ -533,6 +533,27 @@ So what is the difference between generator comprehension and array comprehensio
 The main difference is generator comprehension is **lazy**, array comprehension is **greedy**.
 generator will do as less work as possible, but array will finish all jobs at once.
 
+If using array comprehension, it returns a new array:
+
+```
+var numbers = [for(n of [1,2,3]) n * n];
+console.log(numbers);  // [1, 4, 9]
+```
+
+If using generator comprehension, it returns a generator object:
+
+```
+let iterator = (for(n of [1,2,3]) n * n); // iterator is a generator object
+let next = iterator.next();
+let result = [];
+while(!next.done){
+	result.push(next.value);
+	next = iterator.next();
+}
+
+console.log(result); //[1,4,9]
+```
+
 We use last example we saw:
 
 ```
@@ -553,6 +574,7 @@ describe("Build a iterator by myself", function(){
       			
       	*[Symbol.iterator](){
       		for(var e of this.employees){
+				console.log("yield ", e)
       			yield e;
       		}
       	}
@@ -584,8 +606,9 @@ describe("Build a iterator by myself", function(){
 		var company = new Company();
 		company.addEmployees('Tom', "Jim", "Kate", "Tim");
 		
-		for(var employee of pick(filter(company, (e) => e[0] == "T"),1)){
+		for(var employee of pick(filter(company, (e) => e[0] == "K"),1)){
 			count++;
+			console.log("got", employee);
 		}
 		expect(count).toBe(1);
 	})
@@ -603,17 +626,65 @@ We rewrite filter function by using array comprehension:
 And print out what we got from the result: 
 
 ```
-		for(var employee of pick(filter(company, (e) => e[0] == "T"),1)){
+		for(var employee of pick(filter(company, (e) => e[0] == "K"),1)){
 			count++;
 			console.log("got", employee);
 		}
 ```
 
-We got :
+And in company generator, we print out each yielded items
 
-	  got ["Tom", "Tim"]
+```
+      	*[Symbol.iterator](){
+      		for(var e of this.employees){
+				console.log("yield ", e)
+      			yield e;
+      		}
+      	}
+```
+
+We got :
+    yield  Tom
+	yield  Jim
+	yield  Kate
+	yield  Tim
+	got ["Kate"]
 	  
-Notice that, now we didn't got each employee individually, but an array!
+Notice that, now we didn't got each employee individually, but an array! ["Kate"]
 If we want to get each employee individually, we can append an '*' after yield.
 
+```
+      var filter = function*(items, prediction) { 
+		yield* [for(item of items) if(prediction(item)) item];
+      };
+```
+
+We got:
+ yield  Tom
+ yield  Jim
+ yield  Kate
+ yield  Tim
+ got Kate
+
 ![](./images/5.png)
+
+
+But in the company generator, we still yield all the items, we want it do less work, be lazy!
+The reason it yield all items is that in the filter function, we use array comprehension, it will go thought all array items.
+
+So if you change to generator comprehension:
+
+```
+      var filter = function*(items, prediction) { 
+		yield* (for(item of items) if(prediction(item)) item);
+      };
+```
+
+We got:
+
+	yield  Tom
+	yield  Jim
+	yield  Kate
+	got Kate
+	
+Now it do less work, it will improve the performance of our application.
