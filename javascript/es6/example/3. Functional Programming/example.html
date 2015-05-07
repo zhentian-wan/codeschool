@@ -14,56 +14,52 @@
 
 <body>
   <script type="module">
-    class Company {
-      constructor() {
-        this.employees = [];
-        console.log("Company constructor...");
-      }
-
-      addEmployees(...names) {
-        //concat return a new array
-        this.employees = this.employees.concat(names);
-      }
-
-      * [Symbol.iterator]() {
-        for (var e of this.employees) {
-          yield e;
-        }
-      }
-    };
-
-
-    var filter = function * (items, prediction) {
-      for (var item of items) {
-        if (prediction(item)) {
-          yield item;
-        }
-      }
-    };
-
-    var pick = function * (items, num) {
-      // if just pick 0 person, just return;
-      if (num < 1) return;
-      var count = 0;
-      for (var item of items) {
-        yield item;
-        count++;
-        if (count >= num) {
-          return;
-        }
-      }
-    };
-
-
-    var count = 0;
-    console.log("start");
-    var company = new Company();
-    company.addEmployees('Tom', "Jim", "Kate", "Tim");
-    console.log(company);
-
-    for (var employee of pick(filter(company, (e) = > e[0] == "T"), 1)) {
-      count++;
-    }
+      class Company{
+      	constructor(){
+      		this.employees = [];
+      	}
+      			
+      	addEmployees(...names){
+      		//concat return a new array
+      		this.employees = this.employees.concat(names);
+      	}
+      			
+      	*[Symbol.iterator](){
+      		for(var e of this.employees){
+      			yield e;
+      		}
+      	}
+      } ; 
+      
+      
+      var filter = function*(items, prediction) {
+      	for(var item of items){
+      		if(prediction(item)){
+      			yield item;
+      		}
+      	}
+      };
+      
+      var pick = function*(items, num){
+      	// if just pick 0 person, just return;
+      	if(num < 1) return;
+      	var count = 0;
+      	for(var item of items){
+      		yield item;
+      		count++;
+      		if(count >= num){
+      			return;
+      		}
+      	}
+      };   
+           
+		var count = 0;
+		var company = new Company();
+		company.addEmployees('Tom', "Jim", "Kate", "Tim");
+		
+		for(var employee of pick(filter(company, (e) => e[0] == "T"),1)){
+			count++;
+	  }
 
     document.write(count);
   </script>

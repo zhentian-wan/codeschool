@@ -447,3 +447,173 @@ describe("Build a iterator by myself", function(){
 
 ## Calling next
 
+```
+describe("next() method can take paramter also", function(){
+	it("should be a odd array", function(){
+		let range = function*(start, end){
+			var current = start;
+			while(current <= end){
+				yield current;
+				current += 1;
+			}
+		} 
+	});
+	
+	let result = [];
+	let iterator = range(1,10);
+	let next = iterator.next();
+	while(!next.done){
+		result.push(next.value);
+		next = iterator.next();
+	}
+	
+	expect(result).toEqual([1,3,5,7,9]); //false, [1,2,...,10]
+});
+```
+
+The code above failed the test. We want [1,3,5,7,9], but actually result is [1...10].
+Of course we can change:
+     
+	 current += 2; //instead of current += 1;
+
+But this is not the best choice.
+
+```
+describe("next() method can take paramter also", function(){
+	it("should be a odd array", function(){
+		let range = function*(start, end){
+			var current = start;
+			while(current <= end){
+				var delta = yield current;
+				current += delta || 1;
+			}
+		} 
+	});
+	
+	let result = [];
+	let iterator = range(1,10);
+	let next = iterator.next();
+	while(!next.done){
+		result.push(next.value);
+		next = iterator.next(2);
+	}
+	
+	expect(result).toEqual([1,3,5,7,9]); //ture
+});
+```
+
+`next(parameter)` can take parameter which will affect will yield result. **[Notice: ] The first next() call cannot take parameter.**
+so we pass '2' to next():
+
+```
+	while(!next.done){
+		result.push(next.value);
+		next = iterator.next(2);
+	}
+```
+
+But how to get this parameter in generator function? Actually **yield** method will return the value that next() pass in. If next() has not param, then it is undefined.
+
+```
+var delta = yield current; // delta = 2;
+```
+
+Read: [article](http://www.cnblogs.com/Answer1215/p/4117501.html)
+
+
+## Comprehensions
+
+Read: [Article](http://www.cnblogs.com/Answer1215/p/4114647.html)
+
+![](./images/4.png)
+
+From the image, we see the last is **generator comprehension**.
+
+So what is the difference between generator comprehension and array comprehension?
+The main difference is generator comprehension is **lazy**, array comprehension is **greedy**.
+generator will do as less work as possible, but array will finish all jobs at once.
+
+We use last example we saw:
+
+```
+describe("Build a iterator by myself", function(){
+
+	it("Symbol.iterator", function(){
+		
+      class Company{
+      	constructor(){
+      		this.employees = [];
+      		console.log("Company constructor...");
+      	}
+      			
+      	addEmployees(...names){
+      		//concat return a new array
+      		this.employees = this.employees.concat(names);
+      	}
+      			
+      	*[Symbol.iterator](){
+      		for(var e of this.employees){
+      			yield e;
+      		}
+      	}
+      } ; 
+      
+      
+      var filter = function*(items, prediction) {
+      	for(var item of items){
+      		if(prediction(item)){
+      			yield item;
+      		}
+      	}
+      };
+      
+      var pick = function*(items, num){
+      	// if just pick 0 person, just return;
+      	if(num < 1) return;
+      	var count = 0;
+      	for(var item of items){
+      		yield item;
+      		count++;
+      		if(count >= num){
+      			return;
+      		}
+      	}
+      };   
+           
+		var count = 0;
+		var company = new Company();
+		company.addEmployees('Tom', "Jim", "Kate", "Tim");
+		
+		for(var employee of pick(filter(company, (e) => e[0] == "T"),1)){
+			count++;
+		}
+		expect(count).toBe(1);
+	})
+});
+```
+
+We rewrite filter function by using array comprehension:
+
+```
+      var filter = function*(items, prediction) { 
+		yield [for(item of items) if(prediction(item)) item];
+      };
+```
+
+And print out what we got from the result: 
+
+```
+		for(var employee of pick(filter(company, (e) => e[0] == "T"),1)){
+			count++;
+			console.log("got", employee);
+		}
+```
+
+We got :
+
+	  got ["Tom", "Tim"]
+	  
+Notice that, now we didn't got each employee individually, but an array!
+If we want to get each employee individually, we can append an '*' after yield.
+
+![](./images/5.png)
