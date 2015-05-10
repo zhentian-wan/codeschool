@@ -66,3 +66,89 @@ describe("Numbers", function(){
 	});
 })
 ```
+
+## Math
+
+![](./images/1.png)
+![](./images/2.png)
+
+## Array
+
+#### find()
+
+     var match = [1,5,10].find(item => item > 8); // 10
+
+#### findIndex()
+
+     var match = [1,5,10].findIndex(item => item > 3); // 5
+
+#### fill()
+
+	  var ary = [1,2,3,4,5];
+	  ary.fill('a');
+	  //ary = [a,a,a,a,a];
+	  
+	  var ary = [1,2,3,4,5];
+	  ary.fill('a', 2, 3); //(value, start, end)
+	  //ary = [1,2,a,4,5]
+	  
+#### copyWithin()
+
+
+#### Array.of()
+
+In ES5, when you want to create a array:
+
+	  var a = [1]  
+	  var a = [1,2,3]
+	  
+	  var a = new Array(1,2,3)
+	  
+	  //but you cannot use new Array() to create an element
+	  var ary = new Array(3); // [ , , ];
+	  
+So in ES6, you can use:
+
+	  var ofAry = Array.of(3);
+	  
+	  //So 
+	  expect(ary.length).toBe(3);
+	  expect(ofAry.length).toBe(1);
+	  
+	  
+#### from()
+
+When use querySelectorAll, you actually not get a true array, so you can not use forEach method,
+But you can use `form()` method to convert it to a true array.
+
+```
+it('should create a new array from an array-like object when from is called', function(){
+	var arrayLike = document.querySelectorAll('div');
+	expect(arrayLike.forEach).toBe(undefined);
+	
+	var fromArray = Array.from(arrayLike);
+	expect(fromArray.forEach).toBeDefined();
+});
+```
+
+#### entries()
+
+it('should return entries from the entries function', function(){
+	var a = ['Joe', "Jim", "John"];
+	var entries = a.entries();
+	
+	var firstEntry = entries.next().value;
+	expect(firstEntry[0]).toBe(0);  //first element of array is index
+	expect(firstEntry[1]).toBe('Joe'); //second element of array is value
+});
+
+
+#### keys()
+	  
+	  var a = ['Joe', "Jim", "John"];
+	  var keys = a.keys();
+	  
+	  var firstKey = keys.next().value;
+	  expect(firstKey).toBe(0);
+	  
+	  

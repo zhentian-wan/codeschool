@@ -688,3 +688,4 @@ We got:
 	got Kate
 	
 Now it do less work, it will improve the performance of our application.
+
