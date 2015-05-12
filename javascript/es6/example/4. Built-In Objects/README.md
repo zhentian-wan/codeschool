@@ -151,4 +151,155 @@ it('should return entries from the entries function', function(){
 	  var firstKey = keys.next().value;
 	  expect(firstKey).toBe(0);
 	  
-	  
+## Array Comprehension
+
+```
+it('should creat arrays easily', function(){
+	var ary = [for (i of [1,2,3]) i]; // [1,2,3]
+	
+	var ary2 = [for (i of [1,2,3]) i * i]; // [1,4,9]
+	
+	var ary3 = [for (i of [1,2,3]) if(i < 3) i]; // [1,2]
+	
+	var ary4 = [for(first of ['W', 'J', 'H'])
+		for(middle of ['R', 'B', 'J'])
+			if(first !== middle)
+				(first + ' ' + middle + ' Smith')
+	]
+})
+```
+	 
+
+## Set
+
+Enable us to present a **unique** set of items.
+
+describe('Sets', function(){
+	
+	it('should contain zero item when constructed', function(){
+		var set = new Set();
+		expect(set.size).toBe(0);
+	});
+	
+	it('should contain 1 item when one item is added', function(){
+		var set = new Set();
+		set.add('first item');
+		expect(set.size).toBe(1);
+	});
+	
+	it('should allow objects as a key', function(){
+		var set = new Set();
+		var key = {};
+		set.add(key);
+		expect(set.has(key)).toBe(true);
+	});
+	
+	it("should contain items when given an array in the  constructor", function(){
+		var set = new Set([1,2,3]);
+		expect(set.has(1)).toBe(true);
+	});
+	
+	it("should not allow duplicate values", function(){
+		var set = new Set();
+		var key = {};
+		set.add(key);
+		set.add(key);
+		expect(set.size).toBe(1);
+	});
+	
+	it("should have no items after clear is called", function(){
+		var set = new Set();
+		set.add(5);
+		set.add(4);
+		set.add(3);
+		set.clear();
+		expect(set.size).toBe(0);
+	});
+	
+	it("should remove an item when delete is called", function(){
+		var set = new Set();
+		set.add(5);
+		set.add(4);
+		set.add(3);
+		set.delete(4);
+		expect(set.size).toBe(2);
+	});
+	
+	//
+	it("should call a callback function once for each item", function(){
+			var set = new Set();
+			set.add(5);
+			set.add(4);
+			set.add(3);	
+			
+			var iterationCount = 0;
+			set.forEach(item => iterationCount++);
+			expect(iterationCount).toBe(3);
+	});
+	
+	it("should support for of iteration", function(){
+		var set = new Set([1,2,3]);
+		
+		var iterationCount = 0;
+		for(item of set){
+			iterationCount++;
+		}
+		expect(iterationCount).toBe(3);
+	});
+	
+	it("should return an iterator of arrays when entries is called", function(){
+		var set = new Set();
+		set.add("1");
+		
+		var entries = set.entries();
+		var firstEntry = entries.next().value;
+		expect(firstEntry[0]).toBe("1"); // index
+		expect(firstEntry8[1]).toBe("1"); // value
+	});
+	
+	
+	it("should return an iterator of values when values is called", function(){
+		var set = new Set();
+		set.add("1");
+		
+		var values = set.values();
+		var firstValue = values.next().value;
+		expect(firstValue).toBe("1");
+	});
+	
+	it("should be able to constructed with an iterator", function(){
+		var set = new Set();
+		set.add(1);
+		set.add(2);
+		set.add(3);
+		
+		var set2 = new Set(set.values());
+		expect(set2.size).toBe(3);
+	});
+	
+});
+
+# WeakMap & WeakSet
+
+The problem to the set and Map is when you link to DOM element, if this dom element is removed, but you forgot to remove the ref from set or map. This would cause memory leak.
+![](./images/3.png)
+
+The WeakSet object lets you store weakly held objects in a collection.
+The WeakMap object is a collection of key/value pairs in which the keys are objects and the values can be arbitrary values.
+
+###Why WeakMap?
+Keys of WeakMaps are of the type Object only. 
+
+The experienced JavaScript programmer will notice that this API could be implemented in JavaScript with two arrays (one for keys, one for values) shared by the four API methods. Such an implementation would have two main inconveniences. The first one is an O(n) search (n being the number of keys in the map). The second one is a memory leak issue. With manually written maps, the array of keys would keep references to key objects, preventing them from being garbage collected. In native WeakMaps, references to key objects are held "weakly", which means that they do not prevent garbage collection in case there would be no other reference to the object.
+
+Because of references being weak, WeakMap keys are not enumerable (i.e. there is no method giving you a list of the keys). If they were, the list would depend on the state of garbage collection, introducing non-determinism. If you want to have a list of keys, you should maintain it yourself.
+
+###WeakSet
+The main differences to the Set object are:
+
+* In contrast to Sets, WeakSets are collections of objects only and not of arbitrary values of any type.
+* The WeakSet is weak: References to objects in the collection are held weakly. If there is no other reference to an object stored in the WeakSet, they can be garbage collected. That also means that there is no list of current objects stored in the collection. WeakSets are not enumerable.
+
+Link:
+[WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+[WeakSet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)
