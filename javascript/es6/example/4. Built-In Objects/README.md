@@ -94,6 +94,27 @@ describe("Numbers", function(){
 	  
 #### copyWithin()
 
+#####Syntax
+arr.copyWithin(target, start[, end = this.length])
+
+#####Parameters
+
+**target**
+Target start index position where to copy the elements to.
+**start**
+Source start index position where to start copying elements from.
+**end**
+Optional. Source end index position where to end copying elements from.
+```
+[1, 2, 3, 4, 5].copyWithin(0, 3);
+// [4, 5, 3, 4, 5]
+
+[1, 2, 3, 4, 5].copyWithin(0, 3, 4);
+// [4, 2, 3, 4, 5]
+
+[1, 2, 3, 4, 5].copyWithin(0, -2, -1);
+// [4, 2, 3, 4, 5]
+```
 
 #### Array.of()
 
