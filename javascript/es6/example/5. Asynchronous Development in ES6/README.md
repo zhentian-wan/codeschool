@@ -124,5 +124,80 @@ it('should be asynchronous', function(done){
 });
 ```
 
+## Advance Promise
+
+### Chain the promise
+```
+function getOrder(orderId){
+	return Promise.resolve({userId: 35});
+}
+
+function getUser(userId) {
+	return Promise.resolve({companyId: 18});
+}
+
+function getCompany(companyId) {
+	return Promise.resolve({name: 'AnswerTrip'});
+}
+
+it('should chain sequentially using then', function(done){
+
+	getOrder(3).then(function(order){
+		return getUser(order);
+	}).then(function(user){
+		return getCompany(user);
+	}).then(function(){
+		expect(company.name).toBe('AnswerTrip');
+	}).catch(function(){
+		//handle error
+	});
+});
+```
+
+
+### Return multi promises at the same time: all()
+
+```
+function getCourses(courseId){
+	var courses = {
+		1: {name: "Introduction to Cobol"},
+		2: {name: "Yet Another C# Course"},
+		3: {name: "How to make billions by bloggin"}
+	};
+	
+	return Promise.resolve(courses[courseId]);
+}
+
+
+it('should execute after all promises with all result', function(done){
+
+	var courseIds = [1,2,3];
+	var promises =[];
+	for(var i = 0; i< counrseIds,length; i++){
+		promises.push(getCourses(courseIds[i]));
+	}
+	Promise.all(promises).then(function(values){
+		expect(values.length).toBe(3);
+		done();
+	});
+});
+```
+
+
+### Resolve the other promises after the first promise resolved: race()
+
+```
+it('should resolve after the first promise', function(done){
+	var courseIds = [1,2,3];
+	var promises =[];
+	for(var i = 0; i< counrseIds,length; i++){
+		promises.push(getCourses(courseIds[i]));
+	}
+	Promise.race(promises).then(function(firstVal){
+		expect(values.length).toBeDefined();
+		done();
+	});
+});
+```
 
 
