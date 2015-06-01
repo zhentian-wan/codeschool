@@ -201,3 +201,211 @@ it('should resolve after the first promise', function(done){
 ```
 
 
+## Basic Async Generator 
+
+If we want to achieve the effect that print out 
+
+	  start
+	  pasue
+	  middle
+	  pasue
+	  end
+	  
+We might want the code looks like this:
+ 
+```js
+describe('async generator', function(){
+	it("should not work", function(){
+		console.log("start");
+		pasue(500);
+		console.log("middle");
+		pause(500);
+		console.log("end");
+	});
+})
+
+function pause(time){
+	setTimeout(function(){
+		console.log("pause");
+	}, time)
+}
+```
+But it doesn't work.
+
+
+##### callback 
+
+```js
+describe('should work with regular async callback', function(){
+	it("should not work", function(){
+		console.log("start");
+		pause(500, function(){
+			console.log("middle");
+			pause(500, function(){
+				console.log("end");
+			});
+		});
+	});
+})
+
+function pause(time, cb){
+	setTimeout(function(){
+		console.log("pause");
+		cb();
+	}, time);
+}
+```
+
+But even this is still not good enough, it is hard to read!
+
+##### generator
+```js
+it("should be easier to read with async generator", function(done){
+	function* main() {
+		console.log("start");
+		yield pause(500);
+		console.log("middle");
+		yield pause(500);
+		console.log("end");
+		
+		done();
+	}
+	
+	async.run(main);
+})
+
+(function(){
+	var sequence;
+	var run = function(generator){
+		sequence = generator();
+		var next = sequence.next();
+	}
+	
+	var moveNext = function(){
+		sequence.next();
+	}
+	
+	window.async = {
+		run: run,
+		moveNext: moveNext
+	}
+})();
+
+
+function pause(delay) {
+	setTimeout(function(){
+		console.log("pause");
+		async.moveNext();
+	}, delay);
+}
+
+```
+
+## More Asynchronous Generators
+
+In real application, we want data return back to the generator, then we can use the data to next yield.
+
+```js
+	it("should work with retured data", function(done){
+		function* main(){
+			var price = yield getStockPrice();  // yield also return the value
+			if(price>45) {
+				yield executeTrade():
+			}else{
+				console.log("trade not made");
+			}
+			
+			done();
+		}
+		
+		async.run(main);
+	});
+	
+(function(){
+	var sequence;
+	var run = function(generator){
+		sequence = generator();
+		var next = sequence.next();
+	}
+	
+	var moveNext = function(value){
+		sequence.next(value);
+	}
+	
+	window.async = {
+		run: run,
+		moveNext: moveNext
+	}
+})();	
+
+
+function getStockPrice(){
+	setTimeout(() => async.moveNext(50), 300);
+}
+
+function executeTrade() {
+	setTimeout(() => {
+		console.log("trade completed");
+		async.moveNext();
+	}, 300);
+}
+```
+
+### Handle error
+
+```js
+	it("should work with error", function(done){
+		function* main(){
+			try {
+				var price = yield getStockPrice();  // yield also return the value
+				if(price>45) {
+					yield executeTrade():
+				}else{
+					console.log("trade not made");
+				}
+			} catch(ex) {
+				console.log("error " + ex.message);
+			}
+			done();
+		}
+		
+		async.run(main);
+	});
+	
+(function(){
+	var sequence;
+	var run = function(generator){
+		sequence = generator();
+		var next = sequence.next();
+	}
+	
+	var moveNext = function(value){
+		sequence.next(value);
+	}
+	
+	var fail = function(reason){
+		sequence.throw(reason); //generator has throw method for handling errors
+	}
+	
+	window.async = {
+		run: run,
+		moveNext: moveNext,
+		fail: fail
+	}
+})();	
+	
+	
+function getStockPrice(){
+	try {
+		setTimeout(() => {
+			thorw Error("There is a error");
+			async.moveNext(50)
+		}, 300);
+	} catch(ex) {
+		async.fail(ex); //cal fail to catch error
+	}
+}	
+```
+
+## Async generator with Promise
+
