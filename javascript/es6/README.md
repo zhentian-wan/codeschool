@@ -7,8 +7,8 @@
 * [Class](./example/2. Class/README.md)
 * [Function Programming](./example/3. Functional Programming/README.md)
 * [Built-In Objects](./example/4. Built-In Objects/README.md)
-* [Asynchronous Development in ES6](./examples/5. Asynchronous Development in ES6)
-* [Modules](./examples/7. Modules)
+* [Asynchronous Development in ES6](./example/5. Asynchronous Development in ES6)
+* [Modules](./example/7. Modules)
 
 ## Introduction
 
