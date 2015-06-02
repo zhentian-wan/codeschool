@@ -409,3 +409,68 @@ function getStockPrice(){
 
 ## Async generator with Promise
 
+```js
+	it("should work with promises", function(done){
+		function* main(){
+			try {
+				var price = yield getStockPriceP();  // yield also return the value
+				if(price>45) {
+					yield executeTradeP():
+				}else{
+					console.log("trade not made");
+				}
+			} catch(ex) {
+				console.log("error " + ex.message);
+			}
+			done();
+		}
+		
+		asyncP.run(main);
+	});
+	
+(function(){
+	
+	var run = function(generator){
+		var sequence;
+		var process = function(result){  //result is generator.next();
+			result.value.then(function(value){
+				if(!result.done){
+					process(sequence.next(value))
+				}
+			}, function(error) {
+				if(!result.done){
+					process(sequence.throw(error));
+				}
+			})
+		}
+		
+		sequence = generator();
+		var next = sequence.next();
+		process(next);
+	}
+	
+	window.async = {
+		run: run
+	}
+})();	
+	
+	
+function getStockPriceP(){
+	return new Promise(function(resolve, reject){
+		setTimeout(function(){
+			resolve(50);
+		}, 300);
+	})
+}
+
+function executeTradeP() {
+	return new Promise(function(resolve, reject){
+		setTimeout(function(){
+			//resolve();
+			reject("failure!");
+		}, 300);
+	})
+}	
+```
+
+
