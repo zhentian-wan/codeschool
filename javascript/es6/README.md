@@ -8,6 +8,7 @@
 * [Function Programming](./example/3. Functional Programming/README.md)
 * [Built-In Objects](./example/4. Built-In Objects/README.md)
 * [Asynchronous Development in ES6](./example/5. Asynchronous Development in ES6)
+* [Builded-in Object](./example/6. Builded-in Object)
 * [Modules](./example/7. Modules)
 
 ## Introduction
