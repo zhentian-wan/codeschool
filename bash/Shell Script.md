@@ -81,3 +81,69 @@ test
 echo "global = $global"
 echo "local_var = $local_var" ## you will not see this output correctly
 ```
+
+## Conditional Statements
+
+Basic conditional block:
+
+```bash
+if [[  ]]; then
+
+fi
+```
+
+Exp: 
+
+```bash
+if [[ $USER = 'username' ]]; then
+  echo "true"
+else
+  echo "false"
+fi
+```
+
+*not equal*: `!=`
+*numeric equality*: `-eq`
+*not equals*: `-ne`
+*is empty*: `-z`
+
+```bash
+if [[ 1 -eq 1 ]];
+
+if [[ -z $USER ]];
+```
+
+## Elif
+
+```bash
+if [[ -z $USER ]]; then
+  echo "user is empty"
+elif [[ 1 -eq 1 ]]; then
+  echo "1==1"
+else
+  echo "false"
+fi
+```
+## Ternary
+
+```bash
+[[ $USER = 'username' ]] && echo "yes" || echo "no"
+```
+
+Exp:
+
+```bash
+check_status() {
+  ## Get HTTP status code
+  local status=$(curl -ILs $1 | head -n 1 | cut -d ' ' -f 2)
+  if [[ $status -lt 200 ]] || [[ $status -gt 299 ]]; then
+    echo "$1 failed with a $status"
+    return 1
+  else 
+    echo "$1 succeeded with a $status"
+  fi
+}
+
+check_status https://example.com
+check_status https://example.com/404
+```
