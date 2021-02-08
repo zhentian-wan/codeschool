@@ -72,3 +72,73 @@ hi
 rm file.txt
 ```
 
+## Move a file
+
+If you want to move `index.js` to a `src` folder:
+
+```bash
+mv index.js src/index.js
+```
+
+## Move all files from one dir to another dir
+
+Move all the files under `lib` folder to `src` folder
+
+```bash
+mv lib/* src/
+```
+
+Move all the nested folder and files from `lib` to `src`:
+
+```bash
+cp -R lib/* src/
+```
+
+## Copy file
+
+Copy `README.mnd` to `src` folder:
+
+```bash
+cp README.md src/README.md
+```
+
+## Rename a file
+
+Rename `index.js` file to `a.js`:
+
+```bash
+mv index.js a.js
+```
+
+## Find files in folder
+
+Find all `png` files under `images` folder
+
+```bash
+find images/ -name "*.png"
+```
+
+It is case sensitive, to ignore case, need to add `-i`:
+
+```bash
+find images/ -iname "*.png"
+```
+
+
+### Find and delete files
+
+Find all javascript files under `dist` folder and delete those:
+
+```bash
+find dist/ -name "*.js" -delete
+```
+
+### Find files and run cmd against files
+
+Add `-exec` flag and following with `commands`.
+
+```bash
+find images/ -name "*.ng" -exec pngquant {} \
+```
+
+

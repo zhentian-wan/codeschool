@@ -38,3 +38,11 @@ rm folder/
 rm -r folder/
 rm -rf a/
 ```
+
+## Rename a folder
+
+Rename `src` folder to `lib` folder
+
+```bash
+mv src/ lib
+```
