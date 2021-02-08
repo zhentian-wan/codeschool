@@ -50,3 +50,34 @@ cp init-js.sh /usr/local/bin/init-js.sh
 ```
 
 Now if you run `init-js` in other folder, it will create an empty js project for you and open the VSCode.
+
+
+## Function
+
+```bash
+greet() {
+  return "$1 world"
+}
+
+greet "Hello" ## call greet function with "Hello" paramter
+
+greeting = $(greet "Hello") ## Save the output of function calling into a variable
+```
+
+
+## global and local variables
+
+```bash
+global = 123
+
+test() {
+  echo "global = $global"
+  local local_var = "i am a local"
+  echo "local_var = $local_var"
+}
+
+test
+
+echo "global = $global"
+echo "local_var = $local_var" ## you will not see this output correctly
+```

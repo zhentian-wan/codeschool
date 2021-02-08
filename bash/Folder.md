@@ -46,3 +46,19 @@ Rename `src` folder to `lib` folder
 ```bash
 mv src/ lib
 ```
+
+## Find folders
+
+Find all folders under current dir:
+
+```bash
+find . -type d
+```
+
+The same as `ls -G`.
+
+Find all folders under current dir which named "images":
+
+```bash
+find . -type d -naame "images"
+```
