@@ -140,5 +140,3 @@ Add `-exec` flag and following with `commands`.
 ```bash
 find images/ -name "*.ng" -exec pngquant {} \
 ```
-
-
